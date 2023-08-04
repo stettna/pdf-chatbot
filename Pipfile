@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 openai = "*"
 langchain = "*"
+pypdf = "*"
+tiktoken = "*"
+chromadb = "*"
 
 [dev-packages]
 
