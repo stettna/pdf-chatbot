@@ -9,6 +9,8 @@ langchain = "*"
 pypdf = "*"
 tiktoken = "*"
 chromadb = "*"
+yt-dlp = "*"
+pydub = "*"
 
 [dev-packages]
 
