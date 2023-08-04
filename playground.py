@@ -8,6 +8,7 @@ from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
+from Convo import Conversation
 
 from langchain.prompts import PromptTemplate
 from langchain.document_loaders.generic import GenericLoader
@@ -29,23 +30,18 @@ def main():
 
     llm_model = "gpt-3.5-turbo"
     file = r"C:\Users\mathe\PycharmProjects\LangChainTest\Syllabi_Spring2023 (3).pdf"
-    #url = "https://www.youtube.com/watch?v=kWQuFmB0w-E "
-    #loader = GenericLoader(
-        #YoutubeAudioLoader([url], save_dir),
-        #OpenAIWhisperParser()
-    #)
-    #docs = loader.load()
+    url = "https://www.youtube.com/watch?v=kWQuFmB0w-E "
 
-    memory = ConversationBufferMemory(
-        memory_key="chat_history",
-        return_messages=True
-    )
+    chat = Conversation(llm_model)
 
-    qa = load_db(file, memory, llm_model)
+    chat.add_pdf_data(file)
+    chat.clr_database()
+    chat.add_pdf_data(file)
+
 
     while(1):
        question = input("Q: ")
-       result = qa({'question': question})
+       result = chat.question_n_answer(question)
        print(result["answer"])
 
 
