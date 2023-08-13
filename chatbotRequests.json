@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "ef733e5a-6d9f-48b1-a30f-d94664c84900",
-		"name": "New Collection",
+		"name": "chatbotRequests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22780004"
 	},
@@ -62,25 +62,30 @@
 					"formdata": [
 						{
 							"key": "username",
-							"value": "ckstettler@gmail.com",
+							"value": "user",
 							"type": "text"
 						},
 						{
-							"key": "password",
-							"value": "123456",
+							"key": "password1",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "password2",
+							"value": "password",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:5000/login",
+					"raw": "http://localhost:5000/sign-up",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5000",
 					"path": [
-						"login"
+						"sign-up"
 					]
 				}
 			},
@@ -105,12 +110,12 @@
 					"formdata": [
 						{
 							"key": "email",
-							"value": "ckstettler@gmail.com",
+							"value": "user",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "123456",
+							"value": "password",
 							"type": "text"
 						}
 					]
@@ -186,7 +191,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"user_input\" : \"What is the grading scale?\"}"
+					"raw": "{\"user_input\" : \"What is the course about?\"}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/chatroom",
@@ -220,7 +225,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/C:/Users/mathe/Downloads/Syllabi_Spring2023 (3).pdf"
+							"src": []
 						}
 					]
 				},
