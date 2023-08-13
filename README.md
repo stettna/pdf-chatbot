@@ -1,18 +1,18 @@
-##PDF ChatBot
+## PDF ChatBot
 - Nathan Stettler
 - 8/13/23 
 
-##Requirements
+## Requirements
 - pdf-chatbot repository
 - Python3.10
 - pip
 - Node.js (eventually)
 
-##Running
+## Running
 - pipenv install
 - pipenv run chatbot_server.py
 
-##Testing
+## Testing 
 Currently, the UI is still under construction, but the API can be test via postman.
 The postman collection in the repo allows a user to signup, login, add data, and chat back and forth.
 - After spinning up the server, open postman on the same machine.
