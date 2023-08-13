@@ -107,18 +107,7 @@
 				],
 				"body": {
 					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "email",
-							"value": "user",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "password",
-							"type": "text"
-						}
-					]
+					"formdata": []
 				},
 				"url": {
 					"raw": "http://localhost:5000/start-chat",
@@ -150,18 +139,7 @@
 				],
 				"body": {
 					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "email",
-							"value": "user",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "password",
-							"type": "text"
-						}
-					]
+					"formdata": []
 				},
 				"url": {
 					"raw": "http://localhost:5000/clr-data",

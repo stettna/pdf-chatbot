@@ -2,20 +2,22 @@
 - Nathan Stettler
 - 8/13/23 
 
-## Requirements
-- pdf-chatbot repository
-- Python3.10
-- pip
-- Node.js (eventually)
+## Setup
+- clone pdf-chatbot repository
+- download Python3.10
+- install pipenv
+- download Node.js (eventually)
+- get a openai API key
+- set the key to a system environment variable called OPENAI_API_KEY
 
 ## Running
 - pipenv install
-- pipenv run chatbot_server.py
+- pipenv run python3.10 chatbot_server.py
 
 ## Testing 
 Currently, the UI is still under construction, but the API can be test via postman.
 The postman collection in the repo allows a user to signup, login, add data, and chat back and forth.
-- After spinning up the server, open postman on the same machine.
+- After spinning up the server, open postman on the same machine and import chatbotRequests.json.
 - Send the sign-up request
 - Send the upload request, after attaching a pdf to the value field of the "file" key.
 - Send the start-chat request 
