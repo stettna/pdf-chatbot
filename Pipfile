@@ -11,6 +11,9 @@ tiktoken = "*"
 chromadb = "*"
 yt-dlp = "*"
 pydub = "*"
+flask = "*"
+flask-login = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 
