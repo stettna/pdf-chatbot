@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from flask_cors import cross_origin
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from .helpers import *
@@ -8,8 +9,10 @@ views = Blueprint('views', __name__)
 UPLOAD_FOLDER = './uploads'
 
 
-@views.route('/chatroom', methods=['POST'])
+@views.route('/chatroom', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def chatroom():
+
     data = request.get_json()
 
     user_input = data['user_input']  # gets user input from json request
@@ -25,6 +28,7 @@ def chatroom():
 
 @views.route('/upload-file', methods=['POST'])
 @login_required
+@cross_origin()
 def upload_file():
     # check if the post request has the file part
     if 'file' not in request.files:

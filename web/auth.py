@@ -1,5 +1,5 @@
-
 from flask import Blueprint, jsonify, request
+from flask_cors import cross_origin
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
@@ -10,14 +10,17 @@ auth = Blueprint('auth', __name__)
 UPLOAD_FOLDER = './uploads'
 
 
-@auth.route('/login', methods= ['POST'])
+@auth.route('/login', methods=['POST'])
+@cross_origin()
 def login():
 
-        username = request.form.get('username')
-        password = request.form.get('password')
+        data = request.get_json()
 
+        username = data['username']
+        password = data['password']
         user = User.query.filter_by(username=username).first() #queries user from database
 
+        print("Username:", username, "Password:", password)
         if user: #if found
             if check_password_hash(user.password, password): #matches password
                 login_user(user, remember=True)
@@ -30,17 +33,20 @@ def login():
 
 @auth.route('/logout')
 @login_required
+@cross_origin()
 def logout():
     logout_user()
     return jsonify({'status': "success", 'message' : "user logged"}), 200
 
 
 @auth.route('/sign-up', methods= ['POST'])
+@cross_origin()
 def signup():
 
-    username = request.form.get('username')
-    password1 = request.form.get('password1')
-    password2 = request.form.get('password2')
+    data = request.get_json()
+    username = data['username']
+    password1 = data['password1']
+    password2 = data['password2']
 
     user = User.query.filter_by(username=username).first() #querys user from database
 

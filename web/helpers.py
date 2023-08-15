@@ -1,6 +1,6 @@
 """Helper Functions for chatbot server"""
-
 import os
+
 
 def allowed_file(filename):
     #validates against allowed file types
@@ -12,3 +12,4 @@ def create_dir(path):
    if not os.path.exists(path):
        os.makedirs(path)
    return
+

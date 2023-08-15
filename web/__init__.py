@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from .views import views
 from .auth import *
 from flask_sqlalchemy import SQLAlchemy
@@ -24,6 +25,8 @@ def create_app():
    # intializing Flask
    app = Flask(__name__)
    app.config['SECRET_KEY'] = 'jdvbonfewhf ewfwepuihfnv'
+
+
    # configuring db with Flask
    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
    db.init_app(app)
