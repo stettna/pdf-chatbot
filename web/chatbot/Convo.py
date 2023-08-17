@@ -9,6 +9,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 
+
 class Conversation:
 
     def __init__(self, id, llm, size=100, overlap=20):
@@ -100,12 +101,18 @@ class Conversation:
         if self.vector_store is None: #if none create it
             self.vector_store = Chroma(persist_directory=self.persist_directory, embedding_function=self.embedding)
 
-        retriever = self.vector_store.as_retriever(search_type="mmr") #creates retriever to get relavent content from database
+
+        retriever = self.vector_store.as_retriever(search_type="mmr", search_kwargs={'k': 3, 'fetch_k': 15})
+
+
+        #creates retriever to get relavent content from database
+
         #creates conversation chain with llm
         self.chatbot = ConversationalRetrievalChain.from_llm(
             llm=ChatOpenAI(model_name=self.llm_model, temperature=0),
             retriever=retriever,
-            memory=self.memory
+            memory=self.memory,
+
         )
 
         return

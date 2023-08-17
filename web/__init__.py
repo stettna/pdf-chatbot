@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_cors import CORS
 from .views import views
 from .auth import *
 from flask_sqlalchemy import SQLAlchemy

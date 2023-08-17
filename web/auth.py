@@ -1,17 +1,15 @@
 from flask import Blueprint, jsonify, request
-from flask_cors import cross_origin
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from .__init__ import db
-
+from .helpers import *
 
 auth = Blueprint('auth', __name__)
 UPLOAD_FOLDER = './uploads'
 
-
 @auth.route('/login', methods=['POST'])
-@cross_origin()
+
 def login():
 
         data = request.get_json()
@@ -24,29 +22,37 @@ def login():
         if user: #if found
             if check_password_hash(user.password, password): #matches password
                 login_user(user, remember=True)
-                return jsonify({'status': "success", 'message': "user logged in"}), 200
+                response = jsonify({'status': "success", 'message': "user logged in"})
+                return response, 200
             else:
                 return jsonify({'status': "error", 'message': "incorrect Password"}), 200
         else:
             return jsonify({'status': "error", 'message': "unknown username"}), 200
 
 
+
 @auth.route('/logout')
 @login_required
-@cross_origin()
+
 def logout():
-    logout_user()
-    return jsonify({'status': "success", 'message' : "user logged"}), 200
+    try:
+        logout_user()
+        return jsonify({'status': "success", 'message': "user logged"}), 200
+    except:
+        return jsonify({'status': "error", 'message': "error occurred in logout"}), 200
+
 
 
 @auth.route('/sign-up', methods= ['POST'])
-@cross_origin()
 def signup():
 
     data = request.get_json()
-    username = data['username']
-    password1 = data['password1']
-    password2 = data['password2']
+    try:
+        username = data['username']
+        password1 = data['password1']
+        password2 = data['password2']
+    except KeyError:
+        return jsonify({'status': "error", 'message': "missing necessary request field"}), 200
 
     user = User.query.filter_by(username=username).first() #querys user from database
 
@@ -60,10 +66,15 @@ def signup():
         return jsonify({'status': "error", 'message': "password is less then 3 characters"}), 200
     else:
         #adds user to database and logs them in
-        new_user = User(username=username, password=generate_password_hash( password1, method='scrypt'))
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user, remember=True)
-        return jsonify({'status': "success", 'message' : "user has been sign-up and logged in"}), 200
+        try:
+            new_user = User(username=username, password=generate_password_hash( password1, method='scrypt'))
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user, remember=True)
+            create_dir(UPLOAD_FOLDER + "/" + str(current_user.id) + "/uploaded_files.txt")
+            return jsonify({'status': "success", 'message': "user has been sign-up and logged in"}), 200
+        except:
+            return jsonify({'status': "error", 'message': "error occurred when creating database entry"}), 200
+
 
 
