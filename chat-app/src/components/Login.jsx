@@ -8,21 +8,26 @@ export const Login = (props) => {
         const handleSubmit = (event) => {
             event.preventDefault()
             const req = {username : username, password : password}
+
             fetch("http://localhost:3000/login",
-                  {method: "POST", mode: 'same-origin', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json'}, credentials: 'include',
+                  {method: "POST", mode: 'same-origin',
+                  headers: { 'Content-Type': 'application/json', 'Accept': 'application/json'}, credentials: 'include',
                   body: JSON.stringify(req)}
             )
-            .then(response => {
-                response.json().then(data => {
-
+            .then(
+                response => response.json()
+            )
+            .then(
+                data => {
                     if(data.status === 'success'){
                         props.onFormSwitch('upload')
                     }
                     else{
                         alert(data.message)
                     }
-                })
-            })
+                }
+            )
+
         }
 
         return (

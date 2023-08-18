@@ -23,7 +23,6 @@ function selectForm(form, toggleForm ) {
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
-
   const toggleForm = (form) => {
     setCurrentForm(form);
   }

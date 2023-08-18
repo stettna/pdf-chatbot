@@ -58,20 +58,25 @@ def signup():
 
     if user:
         return jsonify({'status': "error", 'message': "email Already has account"}), 200
-    elif len(username) < 4:
+    elif len(username) < 3:
         return jsonify({'status': "error", 'message': "username is less than three characters"}), 200
     elif password2 != password2:
         return jsonify({'status': "error", 'message': "passwords do not match"}), 200
     elif len(password1) < 4:
-        return jsonify({'status': "error", 'message': "password is less then 3 characters"}), 200
+        return jsonify({'status': "error", 'message': "password is less then 4 characters"}), 200
     else:
         #adds user to database and logs them in
         try:
             new_user = User(username=username, password=generate_password_hash( password1, method='scrypt'))
             db.session.add(new_user)
             db.session.commit()
+
             login_user(new_user, remember=True)
-            create_dir(UPLOAD_FOLDER + "/" + str(current_user.id) + "/uploaded_files.txt")
+
+            create_dir(UPLOAD_FOLDER + "/" + str(current_user.id))
+            f = open(UPLOAD_FOLDER + "/" + str(current_user.id)+ "/uploaded_files.txt", 'w')
+            f.close()
+
             return jsonify({'status': "success", 'message': "user has been sign-up and logged in"}), 200
         except:
             return jsonify({'status': "error", 'message': "error occurred when creating database entry"}), 200

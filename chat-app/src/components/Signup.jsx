@@ -7,20 +7,27 @@ export const Signup = (props) => {
 
         const handleSubmit = (event) => {
             event.preventDefault()
+
             const req = {username : username, password1 : password1, password2 : password2}
+
             fetch("http://localhost:3000/sign-up",
-                  {method: "POST", headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                  {method: "POST",
+                  headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                   body: JSON.stringify(req)}
             )
-            .then(response => response.json())
-            .then(data => {
-                if(data.status === 'success'){
-                    props.onFormSwitch('upload')
+            .then(
+                response => response.json()
+            )
+            .then(
+                data => {
+                    if(data.status === 'success'){
+                        props.onFormSwitch('upload')
+                    }
+                    else{
+                        alert(data.message)
+                    }
                 }
-                else{
-                    alert(data.message)
-                }
-            })
+            )
         }
 
         return (

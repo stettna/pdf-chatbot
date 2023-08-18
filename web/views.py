@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, request
-#from flask_cors import cross_origin
 from werkzeug.utils import secure_filename
 from flask_login import current_user
 from .helpers import *
@@ -9,9 +8,7 @@ views = Blueprint('views', __name__)
 UPLOAD_FOLDER = './uploads'
 
 
-
 @views.route('/chatroom', methods=['POST'])
-#@cross_origin()
 def chatroom():
 
     print("Asking question")
@@ -20,8 +17,8 @@ def chatroom():
 
     if 'user_input' not in data:
         return jsonify({'status': "error", 'message': "no user_input field"}), 200
-
-    user_input = data['user_input']  # gets user input from json request
+    else:
+        user_input = data['user_input']  # gets user input from json request
 
     try:
         convo = get_convo(current_user.id) #finds users "Conversation" object
@@ -39,7 +36,6 @@ def chatroom():
 
 
 @views.route('/upload-file', methods=['POST'])
-#@cross_origin()
 def upload_file():
 
     print("Uploading file")
@@ -47,13 +43,11 @@ def upload_file():
     # check if the post request has the file part
     if 'file' not in request.files:
         return jsonify({'status': "error", 'message': "File not found"}), 200
-
-    file = request.files['file'] #gets file from request
-
+    else:
+        file = request.files['file'] #gets file from request
 
     if file.filename == '':
         return jsonify({'status': "error", 'message': "empty file field"}), 200
-
 
     if allowed_file(file.filename):
         filename = secure_filename(os.path.normpath(file.filename)) # Normalizes path name
@@ -77,7 +71,9 @@ def upload_file():
         except:
             return jsonify({'status': "error", 'message': "error occurred when adding file to vector store"}), 200
 
-    return jsonify({'status': "error", 'message': "unknown error occurred"}), 200
+    else:
+        return jsonify({'status': "error", 'message': "invalid file type"}), 200
+
 
 
 @views.route('/start-chat', methods=['GET'])

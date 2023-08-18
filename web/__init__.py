@@ -19,6 +19,7 @@ def get_db():
 
    return db
 
+
 def create_app():
 
    # intializing Flask

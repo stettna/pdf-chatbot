@@ -2,8 +2,9 @@ import { useState, useEffect} from 'react';
 
 export const ListBox = (props) => {
 
-     useEffect(() => {
-     }, [props.input])
+     useEffect(
+        () => {}, [props.input]
+     )
 
     return (
 

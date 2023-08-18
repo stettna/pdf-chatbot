@@ -1,4 +1,4 @@
-"""Holds Global data and related functions to be accessed by various files"""
+"""Holds Global dict of each users conversation object as well ass related functions to be accessed by various files"""
 
 from .chatbot.Convo import Conversation
 
