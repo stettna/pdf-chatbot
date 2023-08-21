@@ -12,13 +12,19 @@ UPLOAD_FOLDER = './uploads'
 
 def login():
 
+        print("loggin in")
+
         data = request.get_json()
 
-        username = data['username']
-        password = data['password']
+        if 'username' in data and 'password' in data:
+            username = data['username']
+            password = data['password']
+
+        else:
+            return jsonify({'status': "error", 'message': "missing required field"}), 200
+
         user = User.query.filter_by(username=username).first() #queries user from database
 
-        print("Username:", username, "Password:", password)
         if user: #if found
             if check_password_hash(user.password, password): #matches password
                 login_user(user, remember=True)
@@ -33,8 +39,9 @@ def login():
 
 @auth.route('/logout')
 @login_required
-
 def logout():
+    print("loggin out")
+
     try:
         logout_user()
         return jsonify({'status': "success", 'message': "user logged"}), 200
@@ -46,6 +53,7 @@ def logout():
 @auth.route('/sign-up', methods= ['POST'])
 def signup():
 
+    print("signing in")
     data = request.get_json()
     try:
         username = data['username']

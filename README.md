@@ -2,7 +2,7 @@
 - Nathan Stettler
 - 8/13/23 
 
-##About the App
+## About the App
 This app allows users to submit their own data in the form of a PDF, and then asks questions of chat-bot about the data. 
 The chat-bot creates responses solely based on the data submitted and any context given during the conversation. The app
 uses the flask framework for the backend, react.js for the UI, langchain to communicate with OpenAI's gpt
@@ -22,7 +22,8 @@ way to clear the vector-store for a fresh database.
 ## Running
 - pipenv install
 - pipenv run python3.10 chatbot_server.py
-- cd chat-app 
+- cd chat-app
+- npm install
 - npm start
 
 ## Using
