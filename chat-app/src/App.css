@@ -44,6 +44,7 @@ textarea{
     height: 200px;
     width: 1000px;
     padding: 10px;
+
 }
 
 .smallbtn{
@@ -53,6 +54,7 @@ textarea{
     border-radius: 10px;
     width: 80px;
     cursor: pointer;
+    margin: 10px;
 }
 
 .link {
@@ -69,6 +71,7 @@ textarea{
     height: 200px;
     width: 1000px;
     padding: 10px;
+    border: 1px solid black;
 
 }
 
@@ -79,6 +82,7 @@ textarea{
     height: 200px;
     width: 270px;
     padding: 10px;
+    border: 1px solid black;
 }
 
 .loader-container {
@@ -90,10 +94,11 @@ textarea{
 }
 
 .spinner {
-    width: 54px;
-    height: 54px;
+
+    width: 40px;
+    height: 40px;
     border: 8px solid;
-    border-color: #3d5af1 transparent #3d5af1 transparent;
+    border-color: DarkTurquoise transparent DarkTurquoise transparent;
     border-radius: 50%;
     animation: spin-anim 1.2s linear infinite;
 }

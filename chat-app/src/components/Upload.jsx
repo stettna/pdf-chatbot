@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {ListBox} from "./ListBox"
-import {Popup} from 'react';
-
-let filesArr = [];
-
-//{loading ? (<div className="spinner"></div> ): <></> }
 
 export const Upload = (props) => {
 
@@ -99,11 +94,10 @@ export const Upload = (props) => {
 
         return (
             <div className="auth-container">
-                 {loading ? (<Popup> <div className="spinner"></div> </Popup>): <></> }
                 <h2>Upload PDF</h2>
                 <form className="login-form" onSubmit={handleSubmit}>
                     <input  onChange={(event) => handleChange(event)} type="file" id= 'file' name='file'/>
-                    <button type="submit">Submit</button>
+                    {loading ? (<div align='center' className="spinner"></div> ): <button type="submit">Submit</button> }
                 </form>
                 <button onClick={(event) => handleButton(event,"clr-data", "upload")}>Clear Data</button>
                 <h2>Files in Database</h2>

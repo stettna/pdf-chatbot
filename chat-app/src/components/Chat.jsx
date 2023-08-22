@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {Popup} from 'react';
 import {ListBox} from "./ListBox"
 
 
@@ -44,11 +43,10 @@ export const Chat = (props) => {
 
         return (
             <div className="auth-container">
-                    {loading ? (<div align='center' className="spinner"></div> ): <></> }
                     <h2>Chat Room</h2>
                     <form className="login-form" onSubmit={handleSubmit}>
                         <textarea value={input} onChange={(event) => setInput(event.target.value)} placeholder="Enter question" id= 'input' name='input'/>
-                        <button className="smallbtn" type="submit">Send</button>
+                        {loading ? (<div className="spinner"></div> ): <button className="smallbtn" type="submit">Send</button> }
                     </form>
                         <div className='ListBox'>
                             <ListBox input={inputArr}/>
