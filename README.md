@@ -34,5 +34,9 @@ way to clear the vector-store for a fresh database.
 
 WARNING: Refreshing the page with send you back to the login screen, so this is not recommended during a conversation
 
+## Helpful Sources
+- https://learn.deeplearning.ai/langchain-chat-with-your-data/lesson/1/introduction
+- https://www.youtube.com/watch?v=dam0GPOAvVI&t=1468s
+- https://www.youtube.com/watch?v=Y-XW9m8qOis
 
 
