@@ -1,5 +1,5 @@
 from flask import Flask
-from .views import views
+from .pages import *
 from .auth import *
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -9,7 +9,7 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 DB_NAME = "user_data.db"
 
-from .models import *
+from .db_models import *
 
 def get_db():
    global db
@@ -31,7 +31,7 @@ def create_app():
    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
    db.init_app(app)
    #registers the two files that contain the Flask blueprints
-   app.register_blueprint(views, url_prefix='/')
+   app.register_blueprint(pages, url_prefix='/')
    app.register_blueprint(auth, url_prefix='/')
 
    create_db(app)
@@ -50,6 +50,6 @@ def create_app():
 
 def create_db(app):
    # creates SQL data base if not already created
-   if not os.path.exists('web/' + DB_NAME):
+   if not os.path.exists('chat_api/' + DB_NAME):
       with app.app_context():
          db.create_all()

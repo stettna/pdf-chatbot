@@ -8,7 +8,7 @@ from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-
+from langchain.document_loaders import WebBaseLoader
 
 class Conversation:
 
@@ -79,6 +79,26 @@ class Conversation:
         return
 
 
+    def add_web_data(self, url):
+
+        loader = WebBaseLoader(url)
+
+        documents = loader.load()
+
+        chunks = self.split_data(documents, 300, 75)
+
+        if self.vector_store is None:
+            self.vector_store = Chroma.from_documents(
+                documents=chunks,
+                embedding=self.embedding,
+                persist_directory=self.persist_directory
+            )
+        else:
+            self.vector_store.add_documents(documents)
+
+        return
+
+
     def ask_question(self, question):
 
         if self.chatbot is None:#should never happen
@@ -100,7 +120,6 @@ class Conversation:
 
         if self.vector_store is None: #if none create it
             self.vector_store = Chroma(persist_directory=self.persist_directory, embedding_function=self.embedding)
-
 
         retriever = self.vector_store.as_retriever(search_type="mmr", search_kwargs={'k': 3, 'fetch_k': 15})
 

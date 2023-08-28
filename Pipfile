@@ -14,6 +14,7 @@ pydub = "*"
 flask = "*"
 flask-login = "*"
 flask-sqlalchemy = "*"
+bs4 = "*"
 
 [dev-packages]
 

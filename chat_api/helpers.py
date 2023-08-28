@@ -16,7 +16,7 @@ def create_dir(path):
    return
 
 
-def has_file(name, path):
+def has_source(name, path):
     'checks if filename has already been entered into the database'
 
     file1 = open(path, "r")
@@ -29,16 +29,16 @@ def has_file(name, path):
         return True
 
 
-def add_file_name(name, path):
-    'appends new filename to list of files'
+def add_data_source(name, path):
+    'appends new source to list of sources'
 
     f = open(path, "a")  # append mode
     f.write(name + "\n")
     f.close()
 
 
-def get_file_names(path):
-    'gets a list of all files currently in database'
+def get_source_names(path):
+    'gets a list of all sources currently in database'
 
     file1 = open(path, "r")
     names = file1.read().split('\n')

@@ -9,7 +9,10 @@ export const Upload = (props) => {
         const [fileNames, setFileNames] = useState([])
         const [hasFileList, setHasFileList] = useState(false)
 
-        const [loading, setLoading] = useState(false)
+        const [url, setUrl] = useState()
+
+        const [loadingf, setLoadingf] = useState(false)
+        const [loadingu, setLoadingu] = useState(false)
 
         const handleChange = (event) => {
 
@@ -17,9 +20,9 @@ export const Upload = (props) => {
                 setIsSelected(true);
         }
 
-        const handleSubmit = (event) => {
+        const handleSubmitFile = (event) => {
             event.preventDefault()
-            setLoading(true)
+            setLoadingf(true)
 
             const formData = new FormData()
             formData.append("file", selectedFile);
@@ -39,10 +42,40 @@ export const Upload = (props) => {
                   else{
                       alert(data.message)
                   }
-                  setLoading(false)
+                  setLoadingf(false)
                 }
             )
         }
+
+
+        const handleSubmitUrl = (event) => {
+            event.preventDefault()
+            setLoadingu(true)
+
+            const req = {url : url}
+
+            fetch("http://localhost:3000/url-data",
+                {method: "POST",
+                  headers: { 'Content-Type': 'application/json', 'Accept': 'application/json'},
+                  body: JSON.stringify(req)}
+            )
+            .then(
+                response => response.json()
+            )
+            .then(
+                data =>  {
+                  if(data.status === 'success'){
+                      setFileNames(prevArray => [...prevArray, url]);
+                      setUrl('')
+                  }
+                  else{
+                      alert(data.message)
+                  }
+                  setLoadingu(false)
+                }
+            )
+        }
+
 
         const handleButton = (event, loc, page) => {
             fetch("http://localhost:3000/" + loc,
@@ -94,16 +127,21 @@ export const Upload = (props) => {
 
         return (
             <div className="auth-container">
-                <h2>Upload PDF</h2>
-                <form className="login-form" onSubmit={handleSubmit}>
+                <form className="login-form" onSubmit={handleSubmitFile}>
+                    <h2>Upload PDF</h2>
                     <input  onChange={(event) => handleChange(event)} type="file" id= 'file' name='file'/>
-                    {loading ? (<div align='center' className="spinner"></div> ): <button type="submit">Submit</button> }
+                    {loadingf ? (<div align='center' className="spinner"></div> ): <button type="submit">Submit</button> }
                 </form>
-                <button onClick={(event) => handleButton(event,"clr-data", "upload")}>Clear Data</button>
-                <h2>Files in Database</h2>
+                <form className="login-form" onSubmit={handleSubmitUrl}>
+                    <h2>Add Web Data</h2>
+                    <input value={url} onChange={(event) => setUrl(event.target.value)} type="url" placeholder="Enter URL" id= 'url' name='url'/>
+                    {loadingu ? (<div align='center' className="spinner"></div> ): <button type="submit">Submit</button> }
+                </form>
+                <h2>Loaded Data</h2>
                 <div className='filebox'>
                     <ListBox input={fileNames}/>
                 </div>
+                <button onClick={(event) => handleButton(event,"clr-data", "upload")}>Clear Data</button>
                 <button onClick={(event) => handleButton(event,"start-chat", "start-chat")}>Chat</button>
                 <button onClick={(event) => handleButton(event,"logout", "login")}>Log-out</button>
             </div>

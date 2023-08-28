@@ -3,8 +3,8 @@
 from .chatbot.Convo import Conversation
 
 LLM = "gpt-3.5-turbo"
-chunk_size = 500 #size of chunks the data gets split into
-overlap = 75 #overlap for each chunk
+chunk_size = 150#size of chunks the data gets split into
+overlap = 30 #overlap for each chunk
 chat_dict = {} # Dict of Conversation object for each user
 
 

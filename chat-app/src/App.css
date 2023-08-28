@@ -4,7 +4,7 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(79deg, #fcfced, #fcedfc 48%, #ebf6ff);
+  background-image: linear-gradient(79deg, #D5FFD7, #FFEAFB 48%, #ebf6ff);
 }
 
 .auth-container, .login-form, .signup-form{
@@ -32,9 +32,8 @@ button{
     font-variant: bold;
     background-color: DarkTurquoise;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-top: 1rem;
 }
 
 textarea{
@@ -51,7 +50,7 @@ textarea{
     font-variant: bold;
     background-color: DarkTurquoise;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 80px;
     cursor: pointer;
     margin: 10px;
@@ -83,6 +82,10 @@ textarea{
     width: 270px;
     padding: 10px;
     border: 1px solid black;
+}
+
+.datapage{
+
 }
 
 .loader-container {

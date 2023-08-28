@@ -9,7 +9,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import ConversationalRetrievalChain
-from web.chatbot.Convo import Conversation
+from chat_api.chatbot.Convo import Conversation
 
 sys.path.append('../../../..')
 persist_directory = 'docs/chroma/'
@@ -20,18 +20,18 @@ def main():
 
     llm_model = "gpt-3.5-turbo"
     file = r"C:\Users\mathe\PycharmProjects\LangChainTest\Syllabi_Spring2023 (3).pdf"
-    url = "https://www.youtube.com/watch?v=kWQuFmB0w-E "
+    url = "https://www.cs.longwood.edu/"
 
-    chat = Conversation(llm_model)
+    chat = Conversation(0,llm_model)
 
-    chat.add_pdf_data(file)
+
     chat.clr_database()
-    chat.add_pdf_data(file)
 
+    chat.load_db()
 
     while(1):
        question = input("Q: ")
-       result = chat.question_n_answer(question)
+       result = chat.ask_question(question)
        print(result["answer"])
 
 

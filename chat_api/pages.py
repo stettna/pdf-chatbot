@@ -4,11 +4,11 @@ from flask_login import current_user
 from .helpers import *
 from .cache import *
 
-views = Blueprint('views', __name__)
+pages = Blueprint('pages', __name__)
 UPLOAD_FOLDER = './uploads'
 
 
-@views.route('/chatroom', methods=['POST'])
+@pages.route('/chatroom', methods=['POST'])
 def chatroom():
 
     print("Asking question")
@@ -35,7 +35,7 @@ def chatroom():
     return jsonify(response)
 
 
-@views.route('/upload-file', methods=['POST'])
+@pages.route('/upload-file', methods=['POST'])
 def upload_file():
 
     print("Uploading file")
@@ -52,7 +52,7 @@ def upload_file():
     if allowed_file(file.filename):
         filename = secure_filename(os.path.normpath(file.filename)) # Normalizes path name
 
-        if has_file(filename, UPLOAD_FOLDER + "/" +str(current_user.id) + "/uploaded_files.txt"):
+        if has_source(filename, UPLOAD_FOLDER + "/" +str(current_user.id) + "/uploaded_files.txt"):
             return jsonify({'status': "error", 'message': "file name already entered into vector store"}), 200
 
         try:
@@ -63,7 +63,7 @@ def upload_file():
 
             get_convo(current_user.id).add_pdf_data((r"C:" + path))  # Add file data to chatbot Database
 
-            add_file_name(filename, UPLOAD_FOLDER + "/" +str(current_user.id) + "/uploaded_files.txt")
+            add_data_source(filename, UPLOAD_FOLDER + "/" +str(current_user.id) + "/uploaded_files.txt")
 
             os.remove(path)  # delete file once stored in  the vector store
             return jsonify({'status': "success", 'message': "file added to database"}), 200
@@ -75,8 +75,7 @@ def upload_file():
         return jsonify({'status': "error", 'message': "invalid file type"}), 200
 
 
-
-@views.route('/start-chat', methods=['GET'])
+@pages.route('/start-chat', methods=['GET'])
 def start_chat():
     print("Starting chat")
     try:
@@ -87,16 +86,16 @@ def start_chat():
         return jsonify({'status': "error", 'message': "error occurred when starting chat"}), 200
 
 
-@views.route('/get-file-list', methods=['GET'])
+@pages.route('/get-file-list', methods=['GET'])
 def get_file_list():
     print("Getting file list")
     try:
-        return jsonify({'status': "success", 'message': "chat started", "files" : get_file_names(UPLOAD_FOLDER + "/" +str(current_user.id) + "/uploaded_files.txt")}), 200
+        return jsonify({'status': "success", 'message': "chat started", "files" : get_source_names(UPLOAD_FOLDER + "/" +str(current_user.id) + "/uploaded_files.txt")}), 200
     except:
         return jsonify({'status': "error", 'message': "error occurred when starting chat"}), 200
 
 
-@views.route('/clr-data', methods=['GET'])
+@pages.route('/clr-data', methods=['GET'])
 def clr_data():
     print("Clearing data")
     try:
@@ -107,3 +106,25 @@ def clr_data():
     except:
         return jsonify({'status': "error", 'message': "error occurred when clearing data"}), 200
 
+
+@pages.route('/url-data', methods=['POST'])
+def url_data():
+    print("loading data")
+
+    data = request.get_json()
+
+    if 'url' not in data:
+        return jsonify({'status': "error", 'message': "no url field"}), 200
+    else:
+        url = data['url']  # gets user input from json request
+
+    if has_source(url, UPLOAD_FOLDER + "/" + str(current_user.id) + "/uploaded_files.txt"):
+        return jsonify({'status': "error", 'message': "url already entered into vector store"}), 200
+
+    try:
+        get_convo(current_user.id).add_web_data(url) #adds vector store data
+        add_data_source(url, UPLOAD_FOLDER + "/" +str(current_user.id) + "/uploaded_files.txt")
+
+        return jsonify({'status': "success", 'message': "data added to vector store"}), 200
+    except:
+        return jsonify({'status': "error", 'message': "error occurred when accessing url"}), 200
