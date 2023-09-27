@@ -39,7 +39,7 @@ class Conversation:
         loader = PyPDFLoader(file)
         documents = loader.load() #loads docuemnts created from PDF
 
-        chunks = self.split_data(documents, 100, 25) #divids documents into chunks
+        chunks = self.split_data(documents, self.size, self.overlap) #divids documents into chunks
 
         if self.vector_store is None: #if None create vector, store then add chunks to it
             self.vector_store = Chroma.from_documents(
@@ -104,7 +104,7 @@ class Conversation:
         if self.chatbot is None:#should never happen
             return
 
-        return self.chatbot({"question" : question}) #asks question and returns chatbot response
+        return self.chatbot({"question": question}) #asks question and returns chatbot response
 
 
     def split_data(self, documents, size, overlap):
@@ -121,17 +121,14 @@ class Conversation:
         if self.vector_store is None: #if none create it
             self.vector_store = Chroma(persist_directory=self.persist_directory, embedding_function=self.embedding)
 
+        # creates retriever to get relavent content from database
         retriever = self.vector_store.as_retriever(search_type="mmr", search_kwargs={'k': 3, 'fetch_k': 15})
-
-
-        #creates retriever to get relavent content from database
 
         #creates conversation chain with llm
         self.chatbot = ConversationalRetrievalChain.from_llm(
             llm=ChatOpenAI(model_name=self.llm_model, temperature=0),
             retriever=retriever,
             memory=self.memory,
-
         )
 
         return
