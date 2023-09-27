@@ -85,7 +85,7 @@ class Conversation:
 
         documents = loader.load()
 
-        chunks = self.split_data(documents, 300, 75)
+        chunks = self.split_data(documents, self.size, self.overlap)
 
         if self.vector_store is None:
             self.vector_store = Chroma.from_documents(
