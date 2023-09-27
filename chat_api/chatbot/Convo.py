@@ -51,8 +51,6 @@ class Conversation:
         else:
             self.vector_store.add_documents(documents)
 
-        self.load_db()
-
         return
 
 
